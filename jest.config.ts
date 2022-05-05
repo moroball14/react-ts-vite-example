@@ -3,7 +3,9 @@
  * https://jestjs.io/docs/configuration
  */
 
-export default {
+import {InitialOptions} from '@jest/types/build/Config';
+
+const config: InitialOptions = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -42,7 +44,11 @@ export default {
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+    global: {
+      statements: 100,
+    },
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -193,3 +199,5 @@ export default {
   // Whether to use watchman for file crawling
   // watchman: true,
 };
+
+export default config;
