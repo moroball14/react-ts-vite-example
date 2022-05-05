@@ -8,8 +8,10 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "check": "prettier --check .",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "react": "^18.0.0",
