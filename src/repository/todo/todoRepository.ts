@@ -1,7 +1,12 @@
 import {TodoType} from '../../db/json/types/todo';
 import {ITodoDriver} from '../../driver/todo/todoDriver';
+import {TodoEntity} from '../../entity/todo/todo';
 
-export class TodoRepository {
+export interface ITodoRepository {
+  fetchAll: () => Promise<TodoEntity[]>;
+}
+
+export class TodoRepository implements ITodoRepository {
   private readonly todoDriver: ITodoDriver;
   constructor(todoDriver: ITodoDriver) {
     this.todoDriver = todoDriver;
@@ -20,7 +25,7 @@ export class TodoRepository {
     }
   };
 
-  private convertForEntity = (todos: TodoType[]) => {
+  private convertForEntity = (todos: TodoType[]): TodoEntity[] => {
     return todos.map((todo) => ({
       ...todo,
       deadlineDate: new Date(),

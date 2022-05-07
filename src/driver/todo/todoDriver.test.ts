@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 import {TodoDriver} from './todoDriver';
-import {testTodos} from '../../__test__/todos/testData';
+import {testDbTodos} from '../../__test__/todos/testData';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -22,7 +22,7 @@ describe('TodoDriver', () => {
 
   describe('fetchAll', () => {
     it('APIアクセスが成功したら、TODOが2つ返却される', async () => {
-      const response = {data: testTodos};
+      const response = {data: testDbTodos};
       mockedAxios.get.mockResolvedValue(response);
 
       const fetchTodos = await todoDriverInstance.fetchAll();

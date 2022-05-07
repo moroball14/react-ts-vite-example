@@ -1,6 +1,6 @@
 import {TodoRepository} from './todoRepository';
 import {TodoDriver} from '../../driver/todo/todoDriver';
-import {testTodos} from '../../__test__/todos/testData';
+import {testDbTodos} from '../../__test__/todos/testData';
 
 const todoDriverInstance = new TodoDriver();
 const todoRepositoryInstance = new TodoRepository(todoDriverInstance);
@@ -17,7 +17,7 @@ describe('TodoRepository', () => {
     it('todoDriver.fetchAllが成功した場合、取得したデータと同じ数だけdeadlineを追加したデータを返却する', async () => {
       const spyTodoDriver = jest
         .spyOn(todoDriverInstance, 'fetchAll')
-        .mockResolvedValue(testTodos);
+        .mockResolvedValue(testDbTodos);
 
       const todos = await todoRepositoryInstance.fetchAll();
 
