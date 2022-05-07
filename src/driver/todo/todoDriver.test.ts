@@ -4,11 +4,13 @@
  */
 
 import axios from 'axios';
-import {todo} from '../../db/json/data/todo';
 import {TodoDriver} from './todoDriver';
+import {testTodos} from '../../__test__/todos/testData';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const todoDriverInstance = new TodoDriver();
 
 describe('TodoDriver', () => {
   beforeAll(() => {
@@ -20,21 +22,20 @@ describe('TodoDriver', () => {
 
   describe('fetchAll', () => {
     it('APIアクセスが成功したら、TODOが2つ返却される', async () => {
-      const demoTodos = [todo, todo];
-      const response = {data: demoTodos};
+      const response = {data: testTodos};
       mockedAxios.get.mockResolvedValue(response);
 
-      const fetchTodos = await TodoDriver.fetchAll();
+      const fetchTodos = await todoDriverInstance.fetchAll();
       expect(fetchTodos.length).toBe(2);
     });
 
-    it('APIアクセスが失敗したら、エラー「failed fetch todos.」がthrowされる', async () => {
+    it('APIアクセスが失敗したら、エラー「todo driver failed to fetch todos.」がthrowされる', async () => {
       mockedAxios.get.mockRejectedValue(() => {
         throw new Error();
       });
 
-      await expect(TodoDriver.fetchAll()).rejects.toThrow(
-        'failed fetch todos.'
+      await expect(todoDriverInstance.fetchAll()).rejects.toThrow(
+        'todo driver failed to fetch todos.'
       );
     });
   });
