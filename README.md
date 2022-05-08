@@ -48,3 +48,7 @@ src
 
 - [フロントエンドで Clean Architecture を適用してみる(+サンプルコード)](https://qiita.com/ttiger55/items/50d88e9dbf3039d7ab66)
 - [Clean Architecture 　達人に学ぶソフトウェアの構造と設計](https://www.kadokawa.co.jp/product/301806000678/)
+
+# 関連記事
+
+- [React × TypeScript × Vite× ESLint × Prettier × Jest × GitHub Actions な環境を構築した](https://qiita.com/mball/items/224804386f671edf6cbc)
