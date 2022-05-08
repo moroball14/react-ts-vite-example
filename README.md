@@ -14,6 +14,12 @@ yarn
 yarn test
 ```
 
+# アプリ起動(開発環境)
+
+```
+yarn dev
+```
+
 # ディレクトリ構成
 
 ```
@@ -37,3 +43,8 @@ src
 │   └── routes: ルーティングに関連する情報
 └── vite-env.d.ts
 ```
+
+# 参考
+
+- [フロントエンドで Clean Architecture を適用してみる(+サンプルコード)](https://qiita.com/ttiger55/items/50d88e9dbf3039d7ab66)
+- [Clean Architecture 　達人に学ぶソフトウェアの構造と設計](https://www.kadokawa.co.jp/product/301806000678/)
