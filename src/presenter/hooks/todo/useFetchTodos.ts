@@ -1,20 +1,8 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {TodoDriver} from '../../../driver/todo/todoDriver';
+import {useCallback, useEffect, useState} from 'react';
 import {TodoEntity} from '../../../entity/todo/todo';
-import {TodoRepository} from '../../../repository/todo/todoRepository';
 import {TodoUseCase} from '../../../use-case/todo/todoUseCase';
 
-export const useFetchTodos = () => {
-  const todoDriverInstance = useMemo(() => new TodoDriver(), []);
-  const todoRepositoryInstance = useMemo(
-    () => new TodoRepository(todoDriverInstance),
-    [todoDriverInstance]
-  );
-  const todoUseCaseInstance = useMemo(
-    () => new TodoUseCase(todoRepositoryInstance),
-    [todoRepositoryInstance]
-  );
-
+export const useFetchTodos = (todoUseCaseInstance: TodoUseCase) => {
   const [todos, setTodos] = useState<TodoEntity[]>([]);
 
   const fetchTodos = useCallback(async () => {
