@@ -2,16 +2,19 @@
  * @jest-environment jsdom
  */
 
-// テストファイルの上部にこれやれば良いっぽい。
-// React Testing Library のexmapleには@testing-library/jest-domをinstallする方法も載っていた。
-// 依存先は最小限にしたい&React Testing LibraryのexampleにはJest27ならこっちでも良いって書いてあった。
-// から、jestの環境を変えるだけで良い上記を使用する。
+// React関連のテストファイルの上部にはこれやれば良いっぽい。
 // ref: https://jestjs.io/docs/configuration#testenvironment-string
 
-import axios from 'axios';
-import {testDbTodos} from '../../../__test__/todos/testData';
+import {testApplicationTodos} from '../../../__test__/todos/testData';
 import {renderHook, waitFor} from '@testing-library/react';
 import {useFetchTodos} from './useFetchTodos';
+import {TodoDriver} from '../../../driver/todo/todoDriver';
+import {TodoRepository} from '../../../repository/todo/todoRepository';
+import {TodoUseCase} from '../../../use-case/todo/todoUseCase';
+
+const todoDriverInstance = new TodoDriver();
+const todoRepositoryInstance = new TodoRepository(todoDriverInstance);
+const todoUseCaseInstance = new TodoUseCase(todoRepositoryInstance);
 
 describe('useFetchTodos', () => {
   beforeAll(() => {
@@ -22,20 +25,23 @@ describe('useFetchTodos', () => {
   });
 
   it('todoの取得に成功したら、todoが2個取得できる', async () => {
-    const response = {data: testDbTodos};
-    const spyAxiosGet = jest.spyOn(axios, 'get').mockResolvedValue(response);
+    const spyTodoUseCaseInstance = jest
+      .spyOn(todoUseCaseInstance, 'fetchAll')
+      .mockResolvedValue(testApplicationTodos);
 
-    const {result} = renderHook(() => useFetchTodos());
-    await waitFor(() => expect(spyAxiosGet).toHaveBeenCalled());
+    const {result} = renderHook(() => useFetchTodos(todoUseCaseInstance));
+    await waitFor(() => expect(spyTodoUseCaseInstance).toHaveBeenCalled());
     await waitFor(() => expect(result.current.todos.length).toBe(2));
   });
 
   it('todoの取得に失敗したら、todoが0個取得できる', async () => {
-    const spyAxiosGet = jest.spyOn(axios, 'get').mockRejectedValue(() => {
-      throw new Error();
-    });
-    const {result} = renderHook(() => useFetchTodos());
-    await waitFor(() => expect(spyAxiosGet).toHaveBeenCalled());
+    const spyTodoUseCaseInstance = jest
+      .spyOn(todoUseCaseInstance, 'fetchAll')
+      .mockRejectedValue(() => {
+        throw new Error();
+      });
+    const {result} = renderHook(() => useFetchTodos(todoUseCaseInstance));
+    await waitFor(() => expect(spyTodoUseCaseInstance).toHaveBeenCalled());
     await waitFor(() => expect(result.current.todos.length).toBe(0));
   });
 });
