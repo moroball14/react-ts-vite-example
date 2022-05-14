@@ -52,3 +52,4 @@ src
 # 関連記事
 
 - [React × TypeScript × Vite× ESLint × Prettier × Jest × GitHub Actions な環境を構築した](https://qiita.com/mball/items/224804386f671edf6cbc)
+- [「テスト書けない」って悩みは、コンポーネント/ファイルの責務を意識すれば解決する気がしたので React で実践した](https://qiita.com/mball/items/b899a49990dc80444dc4)
